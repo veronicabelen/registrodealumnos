@@ -60,20 +60,23 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'dni' => ['required', 'string', 'max:255', 'unique:users'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'phone' => ['nullable', 'string', 'max:255'],
-            'university' => ['nullable', 'string', 'max:255'],
-            'career' => ['nullable', 'string', 'max:255'],
-            'commission' => ['nullable', 'string', 'max:255'],
-            'photo' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'github_url' => ['nullable', 'url', 'max:255'],
-            'linkedin_url' => ['nullable', 'url', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
+            'telefono' => ['nullable', 'string', 'max:255'],
+            'foto_perfil' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'github' => ['nullable', 'url', 'max:255'],
+            'linkedin' => ['nullable', 'url', 'max:255'],
+            'rol' => ['required', 'in:Alumno,Docente,Administrador'],
+            'university' => ['required', 'string', 'max:255'],
+            'career' => ['required', 'string', 'max:255'],
+            'commission' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
 
+
+
         // Manejar la subida de la foto
-        $photoPath = $request->file('photo')->store('photos', 'public');
+        $photoPath = $request->file('foto_perfil')->store('photos', 'public');
 
 
         // Crear el usuario con el rol por defecto de 'alumno'
@@ -82,14 +85,14 @@ class RegisteredUserController extends Controller
             'dni' => $request->dni,
             'email' => $request->email,
             'telefono' => $request->telefono,
+            'github' => $request->github,
+            'linkedin' => $request->linkedin,
+            'foto_perfil' => $photoPath,
+            'password' => Hash::make($request->password),
+            'rol' => $request->rol,
             'university' => $request->university,
             'career' => $request->career,
             'commission' => $request->commission,
-            'github_url' => $request->github_url,
-            'linkedin_url' => $request->linkedin_url,
-            'photo' => $photoPath, // Aquí guardamos la ruta de la foto
-            'password' => Hash::make($request->password),
-            'rol' => $request->rol,
         ]);
 
 

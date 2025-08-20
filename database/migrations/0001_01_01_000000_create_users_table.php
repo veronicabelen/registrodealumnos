@@ -21,17 +21,18 @@ return new class extends Migration
             $table->string('github')->nullable();   // URL
             $table->string('whatsapp')->nullable(); // URL o texto
             $table->string('foto_perfil')->nullable(); // ruta imagen
+            $table->string('university')->nullable(); // universidad
+            $table->string('career')->nullable();     // carrera
+            $table->string('commission')->nullable();  // comisión
             $table->rememberToken();
             $table->timestamps();
         });
-
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
         });
-
 
         Schema::create('sessions', function (Blueprint $table) {
             $table->string('id')->primary();

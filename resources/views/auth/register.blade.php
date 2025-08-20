@@ -38,93 +38,62 @@
             </select>
         </div>
 
-
-
-
-
         {{-- Teléfono --}}
         <div class="mt-4">
-            <x-input-label for="phone" value="{{ __('Teléfono') }}" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="text" name="phone"
-                :value="old('phone')" autocomplete="tel" />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+            <x-input-label for="telefono" value="Teléfono" />
+            <x-text-input id="telefono" class="block mt-1 w-full" type="text" name="telefono"
+                :value="old('telefono')" autocomplete="tel" />
+            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
         </div>
 
+        <!-- Universidad -->
+        <select id="university" name="university" required>
+            <option value="">Seleccione una universidad</option>
+            @foreach ($universidades as $universidad)
+            <option value="{{ $universidad }}">{{ $universidad }}</option>
+            @endforeach
+        </select>
 
-        {{-- Universidad --}}
-        <div class="form-group row">
-            <label for="universidad" class="col-md-4 col-form-label text-md-right">{{ __('Universidad') }}</label>
+        <!-- Carrera -->
+        <select id="career" name="career" required>
+            <option value="">Seleccione una carrera</option>
+            @foreach ($carreras as $carrera)
+            <option value="{{ $carrera }}">{{ $carrera }}</option>
+            @endforeach
+        </select>
 
+        <!-- Comisión -->
+        <select id="commission" name="commission" required>
+            <option value="">Seleccione una comisión</option>
+            @foreach ($comisiones as $comision)
+            <option value="{{ $comision }}">{{ $comision }}</option>
+            @endforeach
+        </select>
 
-            <div class="col-md-6">
-                <select id="universidad" class="form-control @error('universidad') is-invalid @enderror" name="universidad" required>
-                    <option value="">Seleccione una universidad</option>
-                    @foreach ($universidades as $universidad)
-                    <option value="{{ $universidad }}">{{ $universidad }}</option>
-                    @endforeach
-                </select>
-                @error('universidad')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-                @enderror
-            </div>
-        </div>
-
-
-
-        <!-- Campo de Carrera -->
-        <div class="form-group row">
-            <label for="career" class="col-md-4 col-form-label text-md-right">{{ __('Carrera') }}</label>
-            <div class="col-md-6">
-                <select id="career" class="form-control" name="career">
-                    <option value="">Seleccione una carrera</option>
-                    @foreach ($carreras as $carrera)
-                    <option value="{{ $carrera }}">{{ $carrera }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-
-        <!-- Campo de Comisión -->
-        <div class="form-group row">
-            <label for="commission" class="col-md-4 col-form-label text-md-right">{{ __('Comisión') }}</label>
-            <div class="col-md-6">
-                <select id="commission" class="form-control" name="commission">
-                    <option value="">Seleccione una comisión</option>
-                    @foreach ($comisiones as $comision)
-                    <option value="{{ $comision }}">{{ $comision }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
 
 
         {{-- GitHub --}}
         <div class="mt-4">
-            <x-input-label for="github_url" value="{{ __('GitHub (URL)') }}" />
-            <x-text-input id="github_url" class="block mt-1 w-full" type="url" name="github_url"
-                :value="old('github_url')" placeholder="https://github.com/usuario" />
-            <x-input-error :messages="$errors->get('github_url')" class="mt-2" />
+            <x-input-label for="github" value="GitHub (URL)" />
+            <x-text-input id="github" class="block mt-1 w-full" type="url" name="github"
+                :value="old('github')" placeholder="https://github.com/usuario" />
+            <x-input-error :messages="$errors->get('github')" class="mt-2" />
         </div>
-
 
         {{-- LinkedIn --}}
         <div class="mt-4">
-            <x-input-label for="linkedin_url" value="{{ __('LinkedIn (URL)') }}" />
-            <x-text-input id="linkedin_url" class="block mt-1 w-full" type="url" name="linkedin_url"
-                :value="old('linkedin_url')" placeholder="https://www.linkedin.com/in/usuario" />
-            <x-input-error :messages="$errors->get('linkedin_url')" class="mt-2" />
+            <x-input-label for="linkedin" value="LinkedIn (URL)" />
+            <x-text-input id="linkedin" class="block mt-1 w-full" type="url" name="linkedin"
+                :value="old('linkedin')" placeholder="https://www.linkedin.com/in/usuario" />
+            <x-input-error :messages="$errors->get('linkedin')" class="mt-2" />
         </div>
-
 
         {{-- Foto (obligatoria) --}}
         <div class="mt-4">
-            <x-input-label for="photo" value="{{ __('Foto (obligatoria)') }}" />
-            <input id="photo" name="photo" type="file" accept="image/*" class="block mt-1 w-full" required />
-            <x-input-error :messages="$errors->get('photo')" class="mt-2" />
+            <x-input-label for="foto_perfil" value="Foto (obligatoria)" />
+            <input id="foto_perfil" name="foto_perfil" type="file" accept="image/*" class="block mt-1 w-full" required />
+            <x-input-error :messages="$errors->get('foto_perfil')" class="mt-2" />
         </div>
-
 
         {{-- Contraseña --}}
         <div class="mt-4">

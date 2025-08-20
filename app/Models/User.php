@@ -24,12 +24,16 @@ class User extends Authenticatable
         'password',
         'dni',
         'telefono',
-        'rol',  // Rol: Alumno, Docente, Administrador
+        'rol',
         'linkedin',
         'github',
         'whatsapp',
         'foto_perfil',
+        'university',
+        'career',
+        'commission',
     ];
+
 
     public function esAlumno()
     {
