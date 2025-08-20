@@ -74,6 +74,26 @@
             @error('whatsapp') <div class="text-red-600">{{ $message }}</div> @enderror
         </div>
 
+        @php
+        $materiasDisponibles = [
+        'Programación', 'Programacion II', 'Programacion III', 'Base de Datos', 'Base de Datos II',
+        'Metodologia', 'Metodologia II', 'Sistemas Operativos', 'Redes', 'Ingles I', 'Ingles II',
+        'Matematicas', 'Estatistica', 'Arquitectura de Software'
+        ];
+        @endphp
+
+        <div class="mb-4">
+            <label class="block font-semibold mb-2">Materias:</label>
+            @foreach($materiasDisponibles as $materia)
+            <label class="inline-flex items-center mr-4">
+                <input type="checkbox" name="materias[]" value="{{ $materia }}"
+                    {{ (is_array(old('materias', $user->materias ?? [])) && in_array($materia, old('materias', $user->materias ?? []))) ? 'checked' : '' }}>
+                <span class="ml-2">{{ $materia }}</span>
+            </label>
+            @endforeach
+            @error('materias') <div class="text-red-600">{{ $message }}</div> @enderror
+        </div>
+
         <div class="flex gap-4 mt-6">
             <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
                 Guardar cambios

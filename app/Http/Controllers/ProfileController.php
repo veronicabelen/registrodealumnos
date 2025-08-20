@@ -34,20 +34,23 @@ class ProfileController extends Controller
             'github' => 'nullable|string|max:255',
             'linkedin' => 'nullable|string|max:255',
             'whatsapp' => 'nullable|string|max:255',
+            'materias' => 'nullable|array',
+            'materias.*' => 'string',
         ]);
 
-        $user->update($request->only([
-            'name',
-            'dni',
-            'email',
-            'telefono',
-            'university',
-            'career',
-            'commission',
-            'github',
-            'linkedin',
-            'whatsapp',
-        ]));
+        $user->update([
+            'name' => $request->name,
+            'dni' => $request->dni,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'university' => $request->university,
+            'career' => $request->career,
+            'commission' => $request->commission,
+            'github' => $request->github,
+            'linkedin' => $request->linkedin,
+            'whatsapp' => $request->whatsapp,
+            'materias' => $request->materias,
+        ]);
 
         return redirect()->route('dashboard')->with('status', 'Perfil actualizado');
     }

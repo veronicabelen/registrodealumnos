@@ -4,11 +4,9 @@
 <div class="max-w-5xl mx-auto mt-8">
   <!-- Botones arriba de la tabla -->
   <div class="mb-4 flex gap-2">
-    <!-- Volver al perfil -->
     <a href="{{ route('dashboard') }}" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">
       Volver al perfil
     </a>
-    <!-- Cerrar sesión -->
     <form method="POST" action="{{ route('logout') }}" class="inline">
       @csrf
       <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded">
@@ -31,6 +29,7 @@
         <th class="border px-2 py-1">GitHub</th>
         <th class="border px-2 py-1">LinkedIn</th>
         <th class="border px-2 py-1">WhatsApp</th>
+        <th class="border px-2 py-1">Materias</th> <!-- Nueva columna -->
         <th class="border px-2 py-1">Acciones</th>
       </tr>
     </thead>
@@ -47,6 +46,17 @@
         <td class="border px-2 py-1">{{ $alumno->github }}</td>
         <td class="border px-2 py-1">{{ $alumno->linkedin }}</td>
         <td class="border px-2 py-1">{{ $alumno->whatsapp }}</td>
+        <td class="border px-2 py-1">
+          @if($alumno->materias && is_array($alumno->materias))
+          <ul>
+            @foreach($alumno->materias as $materia)
+            <li>{{ $materia }}</li>
+            @endforeach
+          </ul>
+          @else
+          No registradas
+          @endif
+        </td>
         <td class="border px-2 py-1">
           <form action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST" onsubmit="return confirm('¿Seguro que deseas eliminar este alumno?');">
             @csrf

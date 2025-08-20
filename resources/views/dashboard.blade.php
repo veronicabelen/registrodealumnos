@@ -8,7 +8,6 @@
 
 <p>Tu rol es: {{ Auth::user()->rol }}</p>
 
-
 @if (Auth::user()->rol == 'Alumno')
 <p>Bienvenido Alumno, {{ Auth::user()->name }}</p>
 @elseif (Auth::user()->rol == 'Docente')
@@ -41,6 +40,17 @@
     <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de perfil" width="100">
     @else
     No cargada
+    @endif
+  </li>
+  <li><strong>Materias:</strong>
+    @if(Auth::user()->materias)
+    <ul>
+      @foreach(Auth::user()->materias as $materia)
+      <li>{{ $materia }}</li>
+      @endforeach
+    </ul>
+    @else
+    No registradas
     @endif
   </li>
 </ul>

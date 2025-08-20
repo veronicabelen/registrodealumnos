@@ -81,6 +81,20 @@ new #[Layout('components.layouts.auth')] class extends Component {
             :placeholder="__('Confirm password')"
             viewable />
 
+
+        @php
+        $materiasDisponibles = ['Programación', 'Programacion II', 'Programacion III', 'Base de Datos', 'Base de Datos II', 'Metodologia', 'Metodologia II', 'Sistemas Operativos', 'Redes', 'Ingles I', 'Ingles II', 'Matematicas', 'Estatistica', 'Arquitectura de Software'];
+        @endphp
+
+        <label class="block font-semibold mb-2">Materias:</label>
+        @foreach($materiasDisponibles as $materia)
+        <label class="inline-flex items-center mr-4">
+            <input type="checkbox" name="materias[]" value="{{ $materia }}"
+                {{ (is_array(old('materias')) && in_array($materia, old('materias'))) ? 'checked' : '' }}>
+            <span class="ml-2">{{ $materia }}</span>
+        </label>
+        @endforeach
+
         <div class="flex items-center justify-end">
             <flux:button type="submit" variant="primary" class="w-full">
                 {{ __('Create account') }}

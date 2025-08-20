@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('university')->nullable(); // universidad
             $table->string('career')->nullable();     // carrera
             $table->string('commission')->nullable();  // comisión
+            $table->text('')->nullable(); // Lista de materias
             $table->rememberToken();
             $table->timestamps();
         });

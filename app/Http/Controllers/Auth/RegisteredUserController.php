@@ -70,6 +70,8 @@ class RegisteredUserController extends Controller
             'career' => ['required', 'string', 'max:255'],
             'commission' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'materias' => 'nullable|array',
+            'materias.*' => 'string',
         ]);
 
 
@@ -93,6 +95,7 @@ class RegisteredUserController extends Controller
             'university' => $request->university,
             'career' => $request->career,
             'commission' => $request->commission,
+            'materias' => $request->materias, // Laravel lo convierte a JSON si está casteado
         ]);
 
 
