@@ -1,143 +1,164 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-        @csrf
+@extends('layouts.app')
 
+@section('content')
+<div class="bg-gray-100 min-h-screen flex flex-col justify-center items-center py-12">
+    <!-- Contenedor del formulario de registro -->
+    <div class="bg-white shadow-xl rounded-lg p-8 text-center max-w-2xl w-full">
 
-        {{-- Nombre y apellido --}}
-        <div>
-            <x-input-label for="name" value="{{ __('Nombre y apellido') }}" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name"
-                :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <!-- Título del formulario -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Registro de Usuario</h2>
 
+        <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+            @csrf
 
-        {{-- DNI --}}
-        <div>
-            <label for="dni">DNI</label>
-            <input id="dni" type="text" name="dni" required>
-        </div>
+            <!-- Nombre y apellido -->
+            <div class="mt-4 text-left">
+                <x-input-label for="name" :value="__('Nombre y apellido')" class="font-semibold text-gray-700" />
+                <x-text-input id="name" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="text" name="name"
+                    :value="old('name')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            </div>
 
+            <!-- DNI -->
+            <div class="mt-4 text-left">
+                <x-input-label for="dni" :value="__('DNI')" class="font-semibold text-gray-700" />
+                <x-text-input id="dni" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="text" name="dni"
+                    :value="old('dni')" required />
+                <x-input-error :messages="$errors->get('dni')" class="mt-2" />
+            </div>
 
+            <!-- E-mail -->
+            <div class="mt-4 text-left">
+                <x-input-label for="email" :value="__('E-mail')" class="font-semibold text-gray-700" />
+                <x-text-input id="email" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="email" name="email"
+                    :value="old('email')" required autocomplete="username" />
+                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            </div>
 
-        {{-- E-mail --}}
-        <div class="mt-4">
-            <x-input-label for="email" value="{{ __('E-mail') }}" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email"
-                :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <!-- Rol -->
+            <div class="mt-4 text-left">
+                <x-input-label for="rol" :value="__('Rol')" class="font-semibold text-gray-700" />
+                <select id="rol" name="rol" required class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm">
+                    <option value="Alumno" {{ old('rol') == 'Alumno' ? 'selected' : '' }}>Alumno</option>
+                    <option value="Docente" {{ old('rol') == 'Docente' ? 'selected' : '' }}>Docente</option>
 
-        <!-- Rol -->
-        <div>
-            <label for="rol">Rol</label>
-            <select id="rol" name="rol" required>
-                <option value="Alumno">Alumno</option>
-                <option value="Docente">Docente</option>
-                <option value="Administrador">Administrador</option>
-            </select>
-        </div>
+                </select>
+                <x-input-error :messages="$errors->get('rol')" class="mt-2" />
+            </div>
 
-        {{-- Teléfono --}}
-        <div class="mt-4">
-            <x-input-label for="telefono" value="Teléfono" />
-            <x-text-input id="telefono" class="block mt-1 w-full" type="text" name="telefono"
-                :value="old('telefono')" autocomplete="tel" />
-            <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
-        </div>
+            <!-- Teléfono -->
+            <div class="mt-4 text-left">
+                <x-input-label for="telefono" :value="__('Teléfono')" class="font-semibold text-gray-700" />
+                <x-text-input id="telefono" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="text" name="telefono"
+                    :value="old('telefono')" autocomplete="tel" />
+                <x-input-error :messages="$errors->get('telefono')" class="mt-2" />
+            </div>
 
-        <!-- Universidad -->
-        <select id="university" name="university" required>
-            <option value="">Seleccione una universidad</option>
-            @foreach ($universidades as $universidad)
-            <option value="{{ $universidad }}">{{ $universidad }}</option>
-            @endforeach
-        </select>
+            <!-- Universidad -->
+            <div class="mt-4 text-left">
+                <x-input-label for="university" :value="__('Universidad')" class="font-semibold text-gray-700" />
+                <select id="university" name="university" required class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm">
+                    <option value="">Seleccione una universidad</option>
+                    @foreach ($universidades as $universidad)
+                    <option value="{{ $universidad }}" {{ old('university') == $universidad ? 'selected' : '' }}>{{ $universidad }}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('university')" class="mt-2" />
+            </div>
 
-        <!-- Carrera -->
-        <select id="career" name="career" required>
-            <option value="">Seleccione una carrera</option>
-            @foreach ($carreras as $carrera)
-            <option value="{{ $carrera }}">{{ $carrera }}</option>
-            @endforeach
-        </select>
+            <!-- Carrera -->
+            <div class="mt-4 text-left">
+                <x-input-label for="career" :value="__('Carrera')" class="font-semibold text-gray-700" />
+                <select id="career" name="career" required class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm">
+                    <option value="">Seleccione una carrera</option>
+                    @foreach ($carreras as $carrera)
+                    <option value="{{ $carrera }}" {{ old('career') == $carrera ? 'selected' : '' }}>{{ $carrera }}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('career')" class="mt-2" />
+            </div>
 
-        <!-- Comisión -->
-        <select id="commission" name="commission" required>
-            <option value="">Seleccione una comisión</option>
-            @foreach ($comisiones as $comision)
-            <option value="{{ $comision }}">{{ $comision }}</option>
-            @endforeach
-        </select>
+            <!-- Comisión -->
+            <div class="mt-4 text-left">
+                <x-input-label for="commission" :value="__('Comisión')" class="font-semibold text-gray-700" />
+                <select id="commission" name="commission" required class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm">
+                    <option value="">Seleccione una comisión</option>
+                    @foreach ($comisiones as $comision)
+                    <option value="{{ $comision }}" {{ old('commission') == $comision ? 'selected' : '' }}>{{ $comision }}</option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('commission')" class="mt-2" />
+            </div>
 
-        @php
-        $materiasDisponibles = ['Programación', 'Programacion II', 'Programacion III', 'Base de Datos', 'Base de Datos II', 'Metodologia', 'Metodologia II', 'Sistemas Operativos', 'Redes', 'Ingles I', 'Ingles II', 'Matematicas', 'Estatistica', 'Arquitectura de Software'];
-        @endphp
+            <!-- Materias -->
+            <div class="mt-4 text-left">
+                <x-input-label :value="__('Materias')" class="font-semibold text-gray-700 mb-2" />
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                    @php
+                    $materiasDisponibles = ['Programación', 'Programacion II', 'Programacion III', 'Base de Datos', 'Base de Datos II', 'Metodologia', 'Metodologia II', 'Sistemas Operativos', 'Redes', 'Ingles I', 'Ingles II', 'Matematicas', 'Estatistica', 'Arquitectura de Software'];
+                    @endphp
+                    @foreach($materiasDisponibles as $materia)
+                    <label class="inline-flex items-center">
+                        <input type="checkbox" name="materias[]" value="{{ $materia }}"
+                            class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500"
+                            {{ (is_array(old('materias')) && in_array($materia, old('materias'))) ? 'checked' : '' }}>
+                        <span class="ms-2 text-gray-600">{{ $materia }}</span>
+                    </label>
+                    @endforeach
+                </div>
+                <x-input-error :messages="$errors->get('materias')" class="mt-2" />
+            </div>
 
-        <div class="mt-4">
-            <label class="block font-semibold mb-2">Materias:</label>
-            @foreach($materiasDisponibles as $materia)
-            <label class="inline-flex items-center mr-4">
-                <input type="checkbox" name="materias[]" value="{{ $materia }}"
-                    {{ (is_array(old('materias')) && in_array($materia, old('materias'))) ? 'checked' : '' }}>
-                <span class="ml-2">{{ $materia }}</span>
-            </label>
-            @endforeach
-            <x-input-error :messages="$errors->get('materias')" class="mt-2" />
-        </div>
+            <!-- GitHub -->
+            <div class="mt-4 text-left">
+                <x-input-label for="github" :value="__('GitHub (URL)')" class="font-semibold text-gray-700" />
+                <x-text-input id="github" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="url" name="github"
+                    :value="old('github')" placeholder="https://github.com/usuario" />
+                <x-input-error :messages="$errors->get('github')" class="mt-2" />
+            </div>
 
+            <!-- LinkedIn -->
+            <div class="mt-4 text-left">
+                <x-input-label for="linkedin" :value="__('LinkedIn (URL)')" class="font-semibold text-gray-700" />
+                <x-text-input id="linkedin" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="url" name="linkedin"
+                    :value="old('linkedin')" placeholder="https://www.linkedin.com/in/usuario" />
+                <x-input-error :messages="$errors->get('linkedin')" class="mt-2" />
+            </div>
 
+            <!-- Foto (obligatoria) -->
+            <div class="mt-4 text-left">
+                <x-input-label for="foto_perfil" :value="__('Foto (obligatoria)')" class="font-semibold text-gray-700" />
+                <input id="foto_perfil" name="foto_perfil" type="file" accept="image/*" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" required />
+                <x-input-error :messages="$errors->get('foto_perfil')" class="mt-2" />
+            </div>
 
-        {{-- GitHub --}}
-        <div class="mt-4">
-            <x-input-label for="github" value="GitHub (URL)" />
-            <x-text-input id="github" class="block mt-1 w-full" type="url" name="github"
-                :value="old('github')" placeholder="https://github.com/usuario" />
-            <x-input-error :messages="$errors->get('github')" class="mt-2" />
-        </div>
+            <!-- Contraseña -->
+            <div class="mt-4 text-left">
+                <x-input-label for="password" :value="__('Contraseña')" class="font-semibold text-gray-700" />
+                <x-text-input id="password" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="password" name="password"
+                    required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            </div>
 
-        {{-- LinkedIn --}}
-        <div class="mt-4">
-            <x-input-label for="linkedin" value="LinkedIn (URL)" />
-            <x-text-input id="linkedin" class="block mt-1 w-full" type="url" name="linkedin"
-                :value="old('linkedin')" placeholder="https://www.linkedin.com/in/usuario" />
-            <x-input-error :messages="$errors->get('linkedin')" class="mt-2" />
-        </div>
+            <!-- Confirmar contraseña -->
+            <div class="mt-4 text-left">
+                <x-input-label for="password_confirmation" :value="__('Confirmar contraseña')" class="font-semibold text-gray-700" />
+                <x-text-input id="password_confirmation" class="block mt-1 w-full border-gray-300 rounded-lg shadow-sm" type="password"
+                    name="password_confirmation" required autocomplete="new-password" />
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            </div>
 
-        {{-- Foto (obligatoria) --}}
-        <div class="mt-4">
-            <x-input-label for="foto_perfil" value="Foto (obligatoria)" />
-            <input id="foto_perfil" name="foto_perfil" type="file" accept="image/*" class="block mt-1 w-full" required />
-            <x-input-error :messages="$errors->get('foto_perfil')" class="mt-2" />
-        </div>
+            <!-- Botones de acción -->
+            <div class="flex items-center justify-end mt-6">
+                <a class="underline text-sm text-blue-600 hover:text-blue-900" href="{{ route('login') }}">
+                    {{ __('¿Ya estás registrado?') }}
+                </a>
 
-        {{-- Contraseña --}}
-        <div class="mt-4">
-            <x-input-label for="password" value="{{ __('Contraseña') }}" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password"
-                required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-
-        {{-- Confirmar contraseña --}}
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" value="{{ __('Confirmar contraseña') }}" />
-            <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
-                name="password_confirmation" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                {{ __('¿Ya estás registrado?') }}
-            </a>
-
-
-            <x-primary-button class="ms-4">
-                {{ __('Registrarme') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+                <button type="submit" class="ms-4 bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-full shadow-lg transition transform hover:scale-105">
+                    {{ __('Registrarme') }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+@endsection

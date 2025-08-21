@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('dni')->unique();
             $table->string('telefono')->nullable();
-            $table->enum('rol', ['Alumno', 'Docente', 'Administrador']);
+            $table->enum('rol', ['Alumno', 'Docente']);
             $table->string('linkedin')->nullable(); // URL
             $table->string('github')->nullable();   // URL
             $table->string('whatsapp')->nullable(); // URL o texto

@@ -65,7 +65,7 @@ class RegisteredUserController extends Controller
             'foto_perfil' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'github' => ['nullable', 'url', 'max:255'],
             'linkedin' => ['nullable', 'url', 'max:255'],
-            'rol' => ['required', 'in:Alumno,Docente,Administrador'],
+            'rol' => ['required', 'in:Alumno,Docente'],
             'university' => ['required', 'string', 'max:255'],
             'career' => ['required', 'string', 'max:255'],
             'commission' => ['required', 'string', 'max:255'],

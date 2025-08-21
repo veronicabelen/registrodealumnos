@@ -44,10 +44,7 @@ class User extends Authenticatable
     {
         return $this->rol === 'Docente';
     }
-    public function esAdmin()
-    {
-        return $this->rol === 'Administrador';
-    }
+
 
     /**
      * The attributes that should be hidden for serialization.

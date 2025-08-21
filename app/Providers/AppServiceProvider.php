@@ -34,12 +34,6 @@ class AuthServiceProvider extends ServiceProvider
         // ============================
 
 
-        // Solo administrador
-        Gate::define('solo-admin', function ($user) {
-            return $user->persona?->esAdmin();
-        });
-
-
         // Solo docente
         Gate::define('solo-docente', function ($user) {
             return $user->persona?->esDocente();
