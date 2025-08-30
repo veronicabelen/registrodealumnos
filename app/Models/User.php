@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+
+// Agrega esta línea
+use App\Models\Materia;
 
 class User extends Authenticatable
 {
@@ -27,22 +30,23 @@ class User extends Authenticatable
         'rol',
         'linkedin',
         'github',
-        'whatsapp',
+        'whatsapp', // Elimina esta línea si no tienes la columna en la base de datos
         'foto_perfil',
         'university',
         'career',
         'commission',
     ];
 
-
     public function esAlumno()
     {
         return $this->rol === 'Alumno';
     }
+
     public function esDocente()
     {
         return $this->rol === 'Docente';
     }
+
     public function esAdmin()
     {
         return $this->rol === 'Administrador';
@@ -58,18 +62,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+    // Tu cast para 'email_verified_at' y 'password'
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 
     /**
      * Get the user's initials
@@ -81,5 +78,11 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    // Esta relación ya está correcta
+    public function materias()
+    {
+        return $this->belongsToMany(Materia::class);
     }
 }

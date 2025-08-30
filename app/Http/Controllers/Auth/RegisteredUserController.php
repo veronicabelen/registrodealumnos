@@ -59,24 +59,24 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'dni' => ['required', 'string', 'max:255', 'unique:users'],
+            'dni' => ['required', 'string', 'max:8', 'unique:users'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email'],
             'telefono' => ['nullable', 'string', 'max:255'],
-            'foto_perfil' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'foto_perfil' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:3000'],
             'github' => ['nullable', 'url', 'max:255'],
             'linkedin' => ['nullable', 'url', 'max:255'],
-            'rol' => ['required', 'in:Alumno,Docente,Administrador'],
+            'rol' => ['nullable', 'in:Alumno,Docente'],
             'university' => ['required', 'string', 'max:255'],
             'career' => ['required', 'string', 'max:255'],
             'commission' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-
-
-
         // Manejar la subida de la foto
-        $photoPath = $request->file('foto_perfil')->store('photos', 'public');
+        $photoPath = $request->file('foto_perfil')->store('images', 'public');
+
+        // Asignar el rol por defecto si no se ha seleccionado ninguno
+        $rol = $request->rol ?? 'Alumno';
 
 
         // Crear el usuario con el rol por defecto de 'alumno'
@@ -89,10 +89,11 @@ class RegisteredUserController extends Controller
             'linkedin' => $request->linkedin,
             'foto_perfil' => $photoPath,
             'password' => Hash::make($request->password),
-            'rol' => $request->rol,
+            'rol' => $rol,
             'university' => $request->university,
             'career' => $request->career,
             'commission' => $request->commission,
+            'materias' => null, // Esto es opcional, pero ayuda a dejar claro que el campo se dejará en null
         ]);
 
 

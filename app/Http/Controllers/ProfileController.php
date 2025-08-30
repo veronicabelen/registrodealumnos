@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage; // ¡IMPORTANTE! Agrega esta línea
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -17,7 +18,6 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile.edit', compact('user'));
     }
-
 
     public function update(Request $request)
     {
@@ -34,24 +34,50 @@ class ProfileController extends Controller
             'github' => 'nullable|string|max:255',
             'linkedin' => 'nullable|string|max:255',
             'whatsapp' => 'nullable|string|max:255',
+            'materias' => 'nullable|array',
+            'materias.*' => 'string',
         ]);
 
-        $user->update($request->only([
-            'name',
-            'dni',
-            'email',
-            'telefono',
-            'university',
-            'career',
-            'commission',
-            'github',
-            'linkedin',
-            'whatsapp',
-        ]));
+        $user->update([
+            'name' => $request->name,
+            'dni' => $request->dni,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'university' => $request->university,
+            'career' => $request->career,
+            'commission' => $request->commission,
+            'github' => $request->github,
+            'linkedin' => $request->linkedin,
+            'whatsapp' => $request->whatsapp,
+            'materias' => $request->materias,
+        ]);
 
         return redirect()->route('dashboard')->with('status', 'Perfil actualizado');
     }
 
+    /**
+     * Update the user's profile photo.
+     */
+    public function updatePhoto(Request $request)
+    {
+        $request->validate([
+            'foto_perfil' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        // Elimina la foto anterior si existe
+        if ($user->foto_perfil) {
+            Storage::disk('public')->delete($user->foto_perfil);
+        }
+
+        // Guarda la nueva foto
+        $path = $request->file('foto_perfil')->store('photos', 'public');
+        $user->foto_perfil = $path;
+        $user->save();
+
+        return redirect()->route('dashboard')->with('status', 'Foto de perfil actualizada exitosamente.');
+    }
 
     public function destroy(Request $request): RedirectResponse
     {
