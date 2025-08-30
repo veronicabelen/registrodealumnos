@@ -35,6 +35,7 @@ class User extends Authenticatable
         'university',
         'career',
         'commission',
+        'materias',
     ];
 
     public function esAlumno()
@@ -47,10 +48,13 @@ class User extends Authenticatable
         return $this->rol === 'Docente';
     }
 
+<<<<<<< HEAD
     public function esAdmin()
     {
         return $this->rol === 'Administrador';
     }
+=======
+>>>>>>> 0910c7836d4acf2b0211e539f0fffb3b6593cbe3
 
     /**
      * The attributes that should be hidden for serialization.
@@ -62,11 +66,21 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+<<<<<<< HEAD
     // Tu cast para 'email_verified_at' y 'password'
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+=======
+    // Incluye el cast para materias como array
+    protected $casts = [
+        'materias' => 'array',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+>>>>>>> 0910c7836d4acf2b0211e539f0fffb3b6593cbe3
 
     /**
      * Get the user's initials

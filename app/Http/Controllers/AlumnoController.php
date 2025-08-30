@@ -14,7 +14,7 @@ class AlumnoController extends Controller
             abort(403, 'No autorizado');
         }
 
-        $alumnos = User::where('rol', 'Alumno')->get();
+        $alumnos = User::where('rol', 'Alumno')->paginate(10); // 10 alumnos por página
         return view('alumnos.index', compact('alumnos'));
     }
 

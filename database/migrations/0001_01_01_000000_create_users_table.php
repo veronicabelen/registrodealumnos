@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('dni')->unique();
             $table->string('telefono')->nullable();
-            $table->enum('rol', ['Alumno', 'Docente', 'Administrador']);
+            $table->enum('rol', ['Alumno', 'Docente']);
             $table->string('linkedin')->nullable(); // URL
             $table->string('github')->nullable();   // URL
             $table->string('whatsapp')->nullable(); // URL o texto
@@ -24,7 +24,11 @@ return new class extends Migration
             $table->string('university')->nullable(); // universidad
             $table->string('career')->nullable();     // carrera
             $table->string('commission')->nullable();  // comisión
+<<<<<<< HEAD
             $table->json('materias')->nullable(); // Lista de materias
+=======
+            $table->text('')->nullable(); // Lista de materias
+>>>>>>> 0910c7836d4acf2b0211e539f0fffb3b6593cbe3
             $table->rememberToken();
             $table->timestamps();
         });

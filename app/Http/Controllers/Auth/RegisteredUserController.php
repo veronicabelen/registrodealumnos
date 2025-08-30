@@ -65,11 +65,17 @@ class RegisteredUserController extends Controller
             'foto_perfil' => ['required', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:3000'],
             'github' => ['nullable', 'url', 'max:255'],
             'linkedin' => ['nullable', 'url', 'max:255'],
+<<<<<<< HEAD
             'rol' => ['nullable', 'in:Alumno,Docente'],
+=======
+            'rol' => ['required', 'in:Alumno,Docente'],
+>>>>>>> 0910c7836d4acf2b0211e539f0fffb3b6593cbe3
             'university' => ['required', 'string', 'max:255'],
             'career' => ['required', 'string', 'max:255'],
             'commission' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'materias' => 'nullable|array',
+            'materias.*' => 'string',
         ]);
 
         // Manejar la subida de la foto
@@ -93,7 +99,11 @@ class RegisteredUserController extends Controller
             'university' => $request->university,
             'career' => $request->career,
             'commission' => $request->commission,
+<<<<<<< HEAD
             'materias' => null, // Esto es opcional, pero ayuda a dejar claro que el campo se dejará en null
+=======
+            'materias' => $request->materias, // Laravel lo convierte a JSON si está casteado
+>>>>>>> 0910c7836d4acf2b0211e539f0fffb3b6593cbe3
         ]);
 
 
